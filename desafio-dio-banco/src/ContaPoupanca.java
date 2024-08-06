@@ -1,19 +1,14 @@
-public class ContaPoupanca {
+public class ContaPoupanca extends Conta {
 
-    private int agencia;
-    private int conta;
-    private double saldo;
-
-    public void sacar() {
-
+    public ContaPoupanca(Cliente cliente) {
+        super(cliente);
     }
 
-    public void depositar() {
-
-    }
-
-    public void transferir() {
-
+    public void imprimirExtrato() {
+        System.out.println("===== Conta Poupanca =====");
+        System.out.println("Agencia: " + this.getAgencia());
+        System.out.println("Conta: " + this.getConta());
+        System.out.println("Saldo: " + String.format("%.2f", this.getSaldo()));
     }
 
 }
