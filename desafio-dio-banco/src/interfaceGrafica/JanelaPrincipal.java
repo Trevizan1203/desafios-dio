@@ -14,9 +14,9 @@ public class JanelaPrincipal extends JFrame {
     public JanelaPrincipal(Banco banco) {
         this.banco = banco;
         this.setTitle("Banco Digital");
-        this.setSize(200, 350);
+        this.setSize(450, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridLayout(5, 1));
+        this.setLayout(new GridLayout(7, 1));
 
         JButton botaoCadastrarCliente = new JButton("Cadastrar Cliente");
         JButton opBasicas = new JButton("Deposito/Saque");
@@ -29,9 +29,33 @@ public class JanelaPrincipal extends JFrame {
         add(opTransfer);
         add(verificaExtrato);
 
+        JTextArea areaClientes = new JTextArea();
+        areaClientes.setEditable(false);
+
+        JPanel painelPrincipal = new JPanel();
+        painelPrincipal.add(new JLabel("Clientes Ativos"));
+        painelPrincipal.add(areaClientes);
+
+        JButton botaoExibeClientes = new JButton("Exibir Clientes");
+        painelPrincipal.add(botaoExibeClientes);
+
+        add(painelPrincipal, BorderLayout.NORTH);
+        add(new JScrollPane(areaClientes), BorderLayout.CENTER);
+
+        ActionListener acaoListarClientes = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                areaClientes.setText("");
+                areaClientes.append(banco.listarInfosClientes());
+            }
+        };
+
+        botaoExibeClientes.addActionListener(acaoListarClientes);
+
         botaoCadastrarCliente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                acaoListarClientes.actionPerformed(event);
                 new JanelaCliente(banco).setVisible(true);
             }
         });
@@ -39,6 +63,7 @@ public class JanelaPrincipal extends JFrame {
         opBasicas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                acaoListarClientes.actionPerformed(event);
                 new JanelaOperacoes(banco).setVisible(true);
             }
         });
@@ -46,6 +71,7 @@ public class JanelaPrincipal extends JFrame {
         opTransfer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
+                acaoListarClientes.actionPerformed(event);
                 new JanelaTransferencia(banco).setVisible(true);
             }
         });
@@ -54,6 +80,8 @@ public class JanelaPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 new JanelaExtrato(banco).setVisible(true);
+                acaoListarClientes.actionPerformed(event);
+                botaoExibeClientes.addActionListener(acaoListarClientes);
             }
         });
 

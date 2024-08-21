@@ -2,6 +2,7 @@ package logica;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Banco implements RegistradorTransacao {
 
@@ -34,6 +35,16 @@ public class Banco implements RegistradorTransacao {
             }
         }
         return null;
+    }
+
+    public String listarInfosClientes()  {
+        return contas.stream()
+                .map(conta -> String.format("Agencia: %d; Nome Cliente: %s; Id Conta: %d; Saldo: R$ %.2f",
+                        conta.getAgencia(),
+                        conta.getCliente(),
+                        conta.getConta(),
+                        conta.getSaldo()))
+                .collect(Collectors.joining(", \n"));
     }
 
     public void pesquisaTransacao(int transAlvo) {
