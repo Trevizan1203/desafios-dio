@@ -80,8 +80,6 @@ public class JanelaPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent event) {
                 new JanelaExtrato(banco).setVisible(true);
-                acaoListarClientes.actionPerformed(event);
-                botaoExibeClientes.addActionListener(acaoListarClientes);
             }
         });
 

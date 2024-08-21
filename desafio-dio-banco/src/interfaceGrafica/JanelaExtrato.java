@@ -37,19 +37,23 @@ public class JanelaExtrato extends JFrame {
         botaoExibeExtrato.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int numeroConta = Integer.parseInt(numConta.getText());
-                Conta conta = banco.pesquisaConta(numeroConta);
-
-                if (conta != null) {
-                    areaExtrato.setText("");
-                    areaExtrato.append("Extrato da conta");
-                    areaExtrato.append("\n");
-                    areaExtrato.append(conta.toString());
-                } else {
-                    JOptionPane.showMessageDialog(null, "Conta não encontrada");
-                    dispose();
+                if(numConta.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Insira alguma conta válida");
                 }
+                else {
+                    int numeroConta = Integer.parseInt(numConta.getText());
+                    Conta conta = banco.pesquisaConta(numeroConta);
 
+                    if (conta != null) {
+                        areaExtrato.setText("");
+                        areaExtrato.append("Extrato da conta");
+                        areaExtrato.append("\n");
+                        areaExtrato.append(conta.toString());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Conta não encontrada");
+                        dispose();
+                    }
+                }
             }
         });
 
