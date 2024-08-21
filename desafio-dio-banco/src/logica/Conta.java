@@ -1,5 +1,7 @@
+package logica;
+
 public class Conta {
-//conta abstrata para garantir a nao implementação de uma "Conta"
+//conta abstrata para garantir a nao implementação de uma "logica.Conta"
     private int agencia;
     private int conta;
     private double saldo;
@@ -72,9 +74,14 @@ public class Conta {
 
     public void imprimirExtrato() {
         System.out.println("Agencia: " + this.getAgencia());
-        System.out.println("Conta: " + this.getConta());
+        System.out.println("logica.Conta: " + this.getConta());
         System.out.println("Saldo: " + this.getSaldo());
     };
 
+    @Override
+    public String toString() {
+        return String.format("Conta [Agencia=%d, Conta=%d, Saldo=%.2f, Cliente=%s]",
+                agencia, conta, saldo, cliente.getNome());
+    }
 
 }

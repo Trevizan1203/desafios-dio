@@ -1,3 +1,5 @@
+package logica;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -45,10 +47,10 @@ public class Transacao {
     public void imprimirDetalhes() {
         System.out.println("Id da transacao: " + this.getID());
         System.out.println("Transação do tipo: " + this.getTipoTransacao());
-        if(origem != null) {System.out.println("Conta de Origem: " + origem.getConta());}
-        if(destino != null) {System.out.println("Conta de Destino: " + destino.getConta());}
-        System.out.println("Data da Transacao: " + dataDaTransacao.format(formatador));
-        System.out.println("Valor da Transacao: " + valor);
+        if(origem != null) {System.out.println("logica.Conta de Origem: " + origem.getConta());}
+        if(destino != null) {System.out.println("logica.Conta de Destino: " + destino.getConta());}
+        System.out.println("Data da logica.Transacao: " + dataDaTransacao.format(formatador));
+        System.out.println("Valor da logica.Transacao: " + valor);
         System.out.println('\n');
     }
 

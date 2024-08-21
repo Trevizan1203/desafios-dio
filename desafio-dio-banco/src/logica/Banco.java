@@ -1,3 +1,5 @@
+package logica;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,25 +27,29 @@ public class Banco implements RegistradorTransacao {
         return contas.remove(numeroConta);
     }
 
-    public void pesquisaConta(int contaAlvo) {
-        contas.stream()
-                .filter(conta -> conta.getConta() == contaAlvo)
-                .forEach(conta -> conta.imprimirExtrato());
+    public Conta pesquisaConta(int contaAlvo) {
+        for (Conta conta : contas) {
+            if (conta.getConta() == contaAlvo) {
+                return conta;  // Retorna a conta encontrada
+            }
+        }
+        return null;
     }
 
     public void pesquisaTransacao(int transAlvo) {
         transacoes.stream()
                 .filter(trans -> trans.getID() == transAlvo)
-                .forEach(trans -> trans.imprimirDetalhes());
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public void registrarTransacao(Transacao transacao) {
         transacoes.add(transacao);
-    }
+    }}
 
-    public static void main(String[] args) {
-        Banco banco = new Banco("Meu Banco");
+    /*public static void main(String[] args) {
+        Banco banco = new Banco("Meu logica.Banco");
 
         // Criação de clientes
         Cliente cliente1 = new Cliente();
@@ -52,7 +58,7 @@ public class Banco implements RegistradorTransacao {
         Cliente cliente2 = new Cliente();
         cliente2.setNome("Maria Oliveira");
 
-        // Criação de contas, passando o banco como RegistradorTransacao
+        // Criação de contas, passando o banco como logica.RegistradorTransacao
         Conta conta1 = new Conta(cliente1, banco);
         Conta conta2 = new Conta(cliente2, banco);
 
@@ -69,10 +75,10 @@ public class Banco implements RegistradorTransacao {
 
 
         // Imprimindo extratos das contas
-        System.out.println("Extrato Conta Corrente de " + conta1.getCliente() + ":");
+        System.out.println("Extrato logica.Conta Corrente de " + conta1.getCliente() + ":");
         conta1.imprimirExtrato();
 
-        System.out.println("\nExtrato Conta Poupança de " + conta2.getCliente() + ":");
+        System.out.println("\nExtrato logica.Conta Poupança de " + conta2.getCliente() + ":");
         conta2.imprimirExtrato();
 
         // Listando todas as transações realizadas
@@ -81,4 +87,4 @@ public class Banco implements RegistradorTransacao {
 
     }
 
-}
+}*/
