@@ -1,14 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Banco {
+public class Banco implements RegistradorTransacao {
 
     private String nome;
     private List<Conta> contas;
+    private List<Transacao> transacoes;
 
     public Banco(String nome) {
         this.nome = nome;
         this.contas = new ArrayList<>();
+        this.transacoes = new ArrayList<>();
     }
 
     public String getNome() {
@@ -29,8 +31,18 @@ public class Banco {
                 .forEach(conta -> conta.imprimirExtrato());
     }
 
-    public static void main(String[] args) {
+    public void pesquisaTransacao(int transAlvo) {
+        transacoes.stream()
+                .filter(trans -> trans.getID() == transAlvo)
+                .forEach(trans -> trans.imprimirDetalhes());
+    }
 
+    @Override
+    public void registrarTransacao(Transacao transacao) {
+        transacoes.add(transacao);
+    }
+
+    public static void main(String[] args) {
         Banco banco = new Banco("Meu Banco");
 
         // Criação de clientes
@@ -40,24 +52,33 @@ public class Banco {
         Cliente cliente2 = new Cliente();
         cliente2.setNome("Maria Oliveira");
 
-        // Criação de contas
-        ContaCorrente cc1 = new ContaCorrente(cliente1);
-        ContaPoupanca cp1 = new ContaPoupanca(cliente2);
+        // Criação de contas, passando o banco como RegistradorTransacao
+        Conta conta1 = new Conta(cliente1, banco);
+        Conta conta2 = new Conta(cliente2, banco);
 
         // Adicionando contas ao banco
-        banco.addConta(cc1);
-        banco.addConta(cp1);
+        banco.addConta(conta1);
+        banco.addConta(conta2);
 
-        // Operações nas contas
-        cc1.depositar(1000);
-        cp1.depositar(500);
-        cc1.transferir(200, cp1);
+        // Realizando operações nas contas
+        conta1.depositar(1000);  // Depósito na conta1
+        conta1.transferir(200, conta2);  // Transferência de conta1 para conta2
+        conta2.depositar(500);  // Depósito na conta2
+        conta2.sacar(100);
 
-        // Pesquisar e imprimir extrato de uma conta específica
-        System.out.println("Pesquisando conta corrente de " + cc1.getCliente() + ":");
-        banco.pesquisaConta(cc1.getConta());
 
-        System.out.println("\nPesquisando conta poupança de " + cp1.getCliente() + ":");
-        banco.pesquisaConta(cp1.getConta());
+
+        // Imprimindo extratos das contas
+        System.out.println("Extrato Conta Corrente de " + conta1.getCliente() + ":");
+        conta1.imprimirExtrato();
+
+        System.out.println("\nExtrato Conta Poupança de " + conta2.getCliente() + ":");
+        conta2.imprimirExtrato();
+
+        // Listando todas as transações realizadas
+        System.out.println("\nTransações realizadas:");
+        banco.transacoes.forEach(Transacao::imprimirDetalhes);
+
     }
+
 }
